@@ -20,4 +20,6 @@ RUN pip install -e .
 RUN chown -R app:app $APP_HOME
 USER app
 
+RUN poetry shell
+
 CMD ["python3","manage.py","runserver", "0.0.0.0:8000"]

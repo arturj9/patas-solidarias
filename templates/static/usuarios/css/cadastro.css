@@ -1,0 +1,50 @@
+.bg-side{
+    background-color: #e9973a;
+    color: white;
+    height: 100vh;
+    
+
+}
+.header{
+    border-bottom: 1px solid white;
+    padding: 20px;
+}
+
+.body-form{
+    padding: 20px;
+}
+
+.font-logo{
+    margin-left: 10px;
+    font-size: 40px;
+    
+}
+
+.btn-custom-primary{
+    background-color: #aa001a;
+    border: none;
+    box-shadow: 2px 2px 5px 1px black;
+    color: white;
+    font-size: 20px;
+    padding: 5px 20px 5px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+
+}
+
+.link-float{
+    color:black;
+    text-decoration: none;
+    float: right;
+    margin: 20px;
+}
+
+.side-logo{
+    text-align: center;
+    margin-top: 60px;    
+}
+
+.material-icons{
+    color: #aa001a;
+    font-size: 10rem;
+}
