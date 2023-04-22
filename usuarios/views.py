@@ -1,8 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.messages import constants
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
 
 def cadastro(request: HttpRequest) -> render:
+    if request.user.is_authenticated:
+        return redirect('/divulgar/novo_pet')
     if request.method == 'GET':
         return render(request, 'cadastro.html')
     elif request.method == 'POST':
@@ -13,9 +19,11 @@ def cadastro(request: HttpRequest) -> render:
         
         if len(nome.strip()) == 0 or len(email.strip()) == 0 or \
             len(senha.strip()) == 0 or len(confirmar_senha.strip()) == 0:
+            messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
             return render(request, 'cadastro.html')
         
         if senha != confirmar_senha:
+            messages.add_message(request, constants.ERROR, 'Digite duas senhas iguais')
             return render(request, 'cadastro.html')
         
         try:
@@ -24,10 +32,35 @@ def cadastro(request: HttpRequest) -> render:
                 email=email,
                 password=senha
             )
-            # Mensagem de Sucesso
+            messages.add_message(request, constants.SUCCESS, 'Usuário criado com sucesso')
             return render(request, 'cadastro.html')
         except:
-            # Mensagem de Erro
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
             return render(request, 'cadastro.html')
         
-        return HttpResponse(f'{nome} {email} {senha} {confirmar_senha}')
+def logar(request: HttpRequest) -> render:
+    if request.user.is_authenticated:
+        return redirect('/divulgar/novo_pet')
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    elif request.method == 'POST':
+        nome = request.POST.get('nome')
+        senha = request.POST.get('senha')
+        
+        if len(nome.strip()) == 0 or len(senha.strip()) == 0:
+            messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
+            return render(request, 'login.html')
+        
+        user = authenticate(username=nome,
+                            password=senha)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('/divulgar/novo_pet')
+        else:
+            messages.add_message(request, constants.ERROR, 'Usuário ou senha incorretos')
+            return render(request, 'login.html')
+
+def sair(request: HttpRequest) -> render:
+    logout(request)
+    return redirect('/auth/login')
