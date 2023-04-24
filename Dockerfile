@@ -8,7 +8,7 @@ RUN mkdir -p /home/app
 RUN groupadd app && useradd -g app app
 
 # Create the home directory
-ENV APP_HOME=/home/app/api
+ENV APP_HOME=/home/app
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
@@ -19,7 +19,5 @@ RUN pip install -e .
 
 RUN chown -R app:app $APP_HOME
 USER app
-
-RUN poetry shell
 
 CMD ["python3","manage.py","runserver", "0.0.0.0:8000"]
