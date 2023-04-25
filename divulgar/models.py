@@ -24,7 +24,7 @@ class Pet(models.Model):
     estado = models.CharField(max_length=50)
     cidade = models.CharField(max_length=50)
     telefone = models.CharField(max_length=14)
-    status = models.CharField(max_length=1, choices=choices_status)
+    status = models.CharField(max_length=1, choices=choices_status, default='P')
     
     usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     raca = models.ForeignKey(Raca, on_delete=models.DO_NOTHING)
