@@ -42,6 +42,8 @@ def novo_pet(request:HttpRequest) -> render:
             pet.tags.add(tag)
             
         pet.save()
+        
+        return redirect('/divulgar/seus_pets')
 
 @login_required
 def seus_pets(request:HttpRequest) -> render:
